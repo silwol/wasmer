@@ -3025,7 +3025,6 @@ dependencies = [
  "enumset",
  "leb128",
  "region",
- "rkyv",
  "wasmer-compiler",
  "wasmer-engine",
  "wasmer-engine-universal-artifact",
@@ -3040,7 +3039,6 @@ version = "2.2.1"
 dependencies = [
  "enum-iterator",
  "enumset",
- "rkyv",
  "thiserror",
  "wasmer-artifact",
  "wasmer-compiler",
