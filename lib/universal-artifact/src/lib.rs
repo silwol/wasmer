@@ -12,8 +12,7 @@
         clippy::float_arithmetic,
         clippy::mut_mut,
         clippy::nonminimal_bool,
-        clippy::option_map_unwrap_or,
-        clippy::option_map_unwrap_or_else,
+        clippy::map_unwrap_or,
         clippy::print_stdout,
         clippy::unicode_not_nfc,
         clippy::use_self
@@ -22,12 +21,10 @@
 
 mod artifact;
 mod engine;
-mod serialize;
 mod trampoline;
 
 pub use crate::artifact::UniversalArtifactBuild;
 pub use crate::engine::UniversalEngineBuilder;
-pub use crate::serialize::SerializableModule;
 pub use crate::trampoline::*;
 pub use wasmer_artifact::{ArtifactCreate, MetadataHeader, Upcastable};
 
