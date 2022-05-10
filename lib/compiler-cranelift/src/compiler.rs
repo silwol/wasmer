@@ -20,18 +20,15 @@ use cranelift_codegen::{Context, MachTrap};
 use gimli::write::{Address, EhFrame, FrameTable};
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::sync::Arc;
-use wasmer_compiler::Relocation;
-use wasmer_compiler::{
-    CallingConvention, ModuleTranslationState, RelocationTarget, Target, TrapInformation,
-};
+use wasmer_compiler::{CallingConvention, ModuleTranslationState, Target, TrapInformation};
 use wasmer_compiler::{
     Compilation, CompileModuleInfo, CompiledFunction, CompiledFunctionFrameInfo,
     CompiledFunctionUnwindInfo, Compiler, Dwarf, FunctionBinaryReader, FunctionBody,
     FunctionBodyData, MiddlewareBinaryReader, ModuleMiddleware, ModuleMiddlewareChain,
-    SectionIndex,
 };
 use wasmer_types::entity::{EntityRef, PrimaryMap};
 use wasmer_types::{CompileError, FunctionIndex, LocalFunctionIndex, ModuleInfo, SignatureIndex};
+use wasmer_types::{Relocation, RelocationTarget, SectionIndex};
 use wasmer_vm::TrapCode;
 
 /// A compiler that compiles a WebAssembly module with Cranelift, translating the Wasm to Cranelift IR,

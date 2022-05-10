@@ -3095,6 +3095,7 @@ dependencies = [
  "more-asserts",
  "rkyv",
  "serde",
+ "serde_bytes",
  "thiserror",
 ]
 
