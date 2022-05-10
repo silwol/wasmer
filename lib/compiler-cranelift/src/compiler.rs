@@ -20,13 +20,16 @@ use cranelift_codegen::{Context, MachTrap};
 use gimli::write::{Address, EhFrame, FrameTable};
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 use std::sync::Arc;
-use wasmer_compiler::{CallingConvention, ModuleTranslationState, Target, TrapInformation};
+use wasmer_compiler::{CallingConvention, ModuleTranslationState, Target};
 use wasmer_compiler::{
-    Compilation, CompileModuleInfo, CompiledFunction, CompiledFunctionFrameInfo,
-    CompiledFunctionUnwindInfo, Compiler, Dwarf, FunctionBinaryReader, FunctionBody,
-    FunctionBodyData, MiddlewareBinaryReader, ModuleMiddleware, ModuleMiddlewareChain,
+    Compiler, FunctionBinaryReader, FunctionBodyData, MiddlewareBinaryReader, ModuleMiddleware,
+    ModuleMiddlewareChain,
 };
 use wasmer_types::entity::{EntityRef, PrimaryMap};
+use wasmer_types::{
+    Compilation, CompileModuleInfo, CompiledFunction, CompiledFunctionFrameInfo,
+    CompiledFunctionUnwindInfo, Dwarf, FunctionBody, TrapInformation,
+};
 use wasmer_types::{CompileError, FunctionIndex, LocalFunctionIndex, ModuleInfo, SignatureIndex};
 use wasmer_types::{Relocation, RelocationTarget, SectionIndex};
 use wasmer_vm::TrapCode;

@@ -15,7 +15,7 @@ use std::cmp;
 use std::mem;
 
 use cranelift_frontend::{FunctionBuilder, FunctionBuilderContext};
-use wasmer_compiler::FunctionBody;
+use wasmer_types::FunctionBody;
 use wasmer_types::{CompileError, FunctionType};
 use wasmer_vm::VMOffsets;
 
