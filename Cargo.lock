@@ -2815,7 +2815,6 @@ dependencies = [
  "wasmer-compiler-singlepass",
  "wasmer-emscripten",
  "wasmer-engine",
- "wasmer-engine-staticlib",
  "wasmer-engine-universal",
  "wasmer-middlewares",
  "wasmer-types",
@@ -2860,7 +2859,6 @@ dependencies = [
  "wasmer-compiler-singlepass",
  "wasmer-emscripten",
  "wasmer-engine",
- "wasmer-engine-staticlib",
  "wasmer-engine-universal",
  "wasmer-types",
  "wasmer-vfs",
@@ -3023,26 +3021,6 @@ dependencies = [
  "wasmer-artifact",
  "wasmer-compiler",
  "wasmer-engine",
- "wasmer-types",
- "wasmer-vm",
-]
-
-[[package]]
-name = "wasmer-engine-staticlib"
-version = "2.2.1"
-dependencies = [
- "bincode",
- "cfg-if 1.0.0",
- "enumset",
- "leb128",
- "libloading",
- "serde",
- "tempfile",
- "tracing",
- "wasmer-artifact",
- "wasmer-compiler",
- "wasmer-engine",
- "wasmer-object",
  "wasmer-types",
  "wasmer-vm",
 ]
@@ -3245,7 +3223,6 @@ dependencies = [
  "wasmer-emscripten",
  "wasmer-engine",
  "wasmer-engine-dummy",
- "wasmer-engine-staticlib",
  "wasmer-engine-universal",
  "wasmer-middlewares",
  "wasmer-types",
