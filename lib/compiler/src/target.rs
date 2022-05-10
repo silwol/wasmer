@@ -1,5 +1,4 @@
 //! Target configuration
-use crate::error::ParseCpuFeatureError;
 use crate::lib::std::str::FromStr;
 use crate::lib::std::string::{String, ToString};
 use enumset::{EnumSet, EnumSetType};
@@ -7,6 +6,7 @@ pub use target_lexicon::{
     Architecture, BinaryFormat, CallingConvention, Endianness, OperatingSystem, PointerWidth,
     Triple,
 };
+use wasmer_types::error::ParseCpuFeatureError;
 
 /// The nomenclature is inspired by the [`cpuid` crate].
 /// The list of supported features was initially retrieved from

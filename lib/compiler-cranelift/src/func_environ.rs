@@ -14,13 +14,13 @@ use cranelift_codegen::isa::TargetFrontendConfig;
 use cranelift_frontend::{FunctionBuilder, Variable};
 use std::convert::TryFrom;
 use wasmer_compiler::wasmparser::Type;
-use wasmer_compiler::{WasmError, WasmResult};
 use wasmer_types::entity::EntityRef;
 use wasmer_types::entity::PrimaryMap;
 use wasmer_types::{
     FunctionIndex, FunctionType, GlobalIndex, LocalFunctionIndex, MemoryIndex, ModuleInfo,
     SignatureIndex, TableIndex, Type as WasmerType,
 };
+use wasmer_types::{WasmError, WasmResult};
 use wasmer_vm::VMBuiltinFunctionIndex;
 use wasmer_vm::VMOffsets;
 use wasmer_vm::{MemoryStyle, TableStyle};
