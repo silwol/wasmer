@@ -5,7 +5,7 @@ use crate::{
     SectionIndex, SerializeError, SignatureIndex,
 };
 use rkyv::{
-    archived_value, de::deserializers::SharedDeserializeMap, ser::serializers::AllocSerializer,
+    de::deserializers::SharedDeserializeMap, ser::serializers::AllocSerializer,
     ser::Serializer as RkyvSerializer, Archive, Deserialize as RkyvDeserialize,
     Serialize as RkyvSerialize,
 };
@@ -54,11 +54,11 @@ impl SerializableModule {
     /// RKYV serialization (any length) + POS (8 bytes)
     pub fn serialize(&self) -> Result<Vec<u8>, SerializeError> {
         let mut serializer = AllocSerializer::<4096>::default();
-        let pos = serializer
+        let _pos = serializer
             .serialize_value(self)
             .map_err(to_serialize_error)? as u64;
-        let mut serialized_data = serializer.into_serializer().into_inner();
-        serialized_data.extend_from_slice(&pos.to_le_bytes());
+        let serialized_data = serializer.into_serializer().into_inner();
+        //serialized_data.extend_from_slice(&pos.to_le_bytes());
         Ok(serialized_data.to_vec())
     }
 
@@ -83,8 +83,10 @@ impl SerializableModule {
     /// This method is unsafe.
     /// Please check `SerializableModule::deserialize` for more details.
     unsafe fn archive_from_slice<'a>(
-        metadata_slice: &'a [u8],
+        buf: &'a [u8],
     ) -> Result<&'a ArchivedSerializableModule, DeserializeError> {
+        Ok(rkyv::util::archived_root::<SerializableModule>(buf))
+        /*
         if metadata_slice.len() < 8 {
             return Err(DeserializeError::Incompatible(
                 "invalid serialized data".into(),
@@ -93,10 +95,11 @@ impl SerializableModule {
         let mut pos: [u8; 8] = Default::default();
         pos.copy_from_slice(&metadata_slice[metadata_slice.len() - 8..metadata_slice.len()]);
         let pos: u64 = u64::from_le_bytes(pos);
-        Ok(archived_value::<SerializableModule>(
-            &metadata_slice[..metadata_slice.len() - 8],
-            pos as usize,
+        Ok(rkyv::archived_root::<Self>(
+            &metadata_slice//, //[..metadata_slice.len() - 8],
+            //0,
         ))
+            */
     }
 
     /// Deserialize a compilation module from an archive
@@ -106,5 +109,12 @@ impl SerializableModule {
         let mut deserializer = SharedDeserializeMap::new();
         RkyvDeserialize::deserialize(archived, &mut deserializer)
             .map_err(|e| DeserializeError::CorruptedBinary(format!("{:?}", e)))
+    }
+}
+
+impl ArchivedSerializableModule {
+    /// Zero-copy deserialize from a bytes buffer
+    pub unsafe fn from_slice(buf: &[u8]) -> &Self {
+        rkyv::util::archived_root::<SerializableModule>(buf)
     }
 }
