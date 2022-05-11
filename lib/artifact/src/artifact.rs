@@ -2,7 +2,6 @@ use enumset::EnumSet;
 use std::any::Any;
 use std::convert::TryInto;
 use std::path::Path;
-use std::sync::Arc;
 use std::{fs, mem};
 use wasmer_compiler::{CpuFeature, Features};
 use wasmer_types::entity::PrimaryMap;
@@ -18,16 +17,8 @@ use wasmer_types::{
 /// module as well as extra information needed to run the
 /// module at runtime, such as [`ModuleInfo`] and [`Features`].
 pub trait ArtifactCreate: Send + Sync + Upcastable {
-    /// Return a reference-counted pointer to the module
-    fn module(&self) -> Arc<ModuleInfo>;
-
-    /// Return a pointer to a module.
-    fn module_ref(&self) -> &ModuleInfo;
-
-    /// Gets a mutable reference to the info.
-    ///
-    /// Note: this will return `None` if the module is already instantiated.
-    fn module_mut(&mut self) -> Option<&mut ModuleInfo>;
+    /// Create a `ModuleInfo` for instantiation
+    fn create_module_info(&self) -> ModuleInfo;
 
     /// Returns the features for this Artifact
     fn features(&self) -> &Features;
@@ -121,7 +112,7 @@ impl MetadataHeader {
 
     /// Creates a new header for metadata of the given length.
     pub fn new(len: usize) -> [u8; 16] {
-        let header = MetadataHeader {
+        let header = Self {
             magic: Self::MAGIC,
             version: Self::CURRENT_VERSION,
             len: len.try_into().expect("metadata exceeds maximum length"),
@@ -143,7 +134,7 @@ impl MetadataHeader {
             })?
             .try_into()
             .unwrap();
-        let header: MetadataHeader = unsafe { mem::transmute(bytes) };
+        let header: Self = unsafe { mem::transmute(bytes) };
         if header.magic != Self::MAGIC {
             return Err(DeserializeError::Incompatible(
                 "The provided bytes were not serialized by Wasmer".to_string(),
